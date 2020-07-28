@@ -25,11 +25,11 @@ const MySQL = {
 
     Create(table, data, callback) {
 
-        pool.query(`INSERT INTO ${table} SET ?`, [data], (err, rowCreated) => { //Have to delete rowCreated parameter
+        pool.query(`INSERT INTO ${table} SET ?`, [data], (err) => {
             if(err){
-                return callback(err, null);
+                return callback(err);
             }
-            callback(null, rowCreated);
+            callback(null);
         })
     },
 
