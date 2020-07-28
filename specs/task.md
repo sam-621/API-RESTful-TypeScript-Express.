@@ -30,6 +30,7 @@ Obviusly we won’t sell any trip, we just simulate. The app finish when you tak
 - Delete trips (admin)
 
 ## API tasks
+- test
 - Create server (/)
 - Create DB (/)
 - Create auth services
