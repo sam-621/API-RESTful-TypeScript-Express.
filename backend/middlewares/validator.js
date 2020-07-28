@@ -1,6 +1,7 @@
 const { check } = require('express-validator');
 
 const registerValidator = [
+
     check('firstName', 'Need to be a name').isString(),
     check('firstName', 'should not be empty').not().isEmpty(),
 
@@ -17,8 +18,16 @@ const registerValidator = [
     check('password', 'should not be empty').not().isEmpty()
 ]
 
+const logInValidator = [
+    check('email', 'insert a valid email').isEmail(),
+    check('password', 'should be a password').isString(),
+    check('password', 'write at least 6 characters').isLength({ min: 6 }),
+    check('password', 'should not be empty').not().isEmpty()
+]
+
 const validators = {
-    registerValidator
+    registerValidator,
+    logInValidator
 }
 
 module.exports = validators

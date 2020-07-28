@@ -1,5 +1,7 @@
 const { Create, GetOne } = require('../lib/MySQL');
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { secret_key } = require('../config');
 
 
 const AuthServices = {
@@ -22,8 +24,34 @@ const AuthServices = {
         })
     },
 
-    Login() {
+    Login({ email, password }, cb) {
 
+        GetOne('Users', 'email', email, async (err, user) => {
+            if(err) {
+                cb(err, null, null)
+                return
+            }
+            if(user.length) {
+                if(await bcryptjs.compare(password, user[0].password)) {
+                    const payload = {
+                        id: user[0].ID,
+                        rol: user[0].rol
+                    }
+                    jwt.sign(payload, secret_key /*{ expiresIn: }*/, (err, token) => {
+                        if(err) {
+                            cb(err, null, 'Server error')
+                            return
+                        }
+                        cb(false, token, 'success');
+                    });
+                    
+                } else {
+                    cb(true, null, 'Wrond credentials');
+                }
+            } else {
+                cb(true, null, 'wrong credentials');
+            }
+        });
     }
 }
 
