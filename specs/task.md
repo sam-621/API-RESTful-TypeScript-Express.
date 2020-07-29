@@ -35,7 +35,7 @@ Obviusly we won’t sell any trip, we just simulate. The app finish when you tak
 - Create validators (/)
 - Create auth services (/)
 - Create auth routes (/)
-- Create middleware to verify the token
+- Create middleware to verify the token (/)
 - Create user services
 - Create user routes
 - Create admin services
