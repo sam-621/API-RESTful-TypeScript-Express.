@@ -1,4 +1,4 @@
-const { Create, GetOne, Delete } = require('../lib/MySQL')
+const { Create, GetOne, Delete, GetMany } = require('../lib/MySQL')
 
 const UserServices = {
 
@@ -38,6 +38,18 @@ const UserServices = {
                     err ? cb(err, 'There was an error taking this trip') : cb(err, 'Your trip has been added succesfuly');
                 });
             })
+        })
+    },
+
+    GetTrips(cb) {
+        GetMany('Trips', (err, trips) => {
+            err ? cb(err, trips, 'An error has ocurred getting the available trips') : cb(err, trips, 'you got it');
+        })
+    },
+
+    GetTrip(id, cb) {
+        GetOne('Trips', 'ID', id, (err, trip) => {
+            err ? cb(err, trip, 'An error has ocurred getting this trips') : cb(err, trip, 'you got it')
         })
     },
 
