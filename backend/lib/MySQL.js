@@ -43,11 +43,11 @@ const MySQL = {
     },
 
     Delete(table, condition, id, callback) {
-        pool.query(`DELETE FROM ${table} WHERE ${condition} = ?`, [id], (err, rowDeleted) => {
+        pool.query(`DELETE FROM ${table} WHERE ${condition} = ?`, [id], (err) => {
             if(err) {
                 return callback(err, null);
             }
-                callback(null, rowDeleted);
+                callback(null);
         });
     }
 }

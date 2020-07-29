@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const router = Router();
-const { takeTrip } = require('../services/Users');
+const { takeTrip, AbandondATrip } = require('../services/Users');
 const authJWT = require('../middlewares/authJWT');
 
 router.post('/taketrip/:tripID', authJWT, (req, res) => {
@@ -15,5 +15,16 @@ router.post('/taketrip/:tripID', authJWT, (req, res) => {
         });
     });
 });
+
+router.delete('/abandondtrip/:tripID', async (req, res) => {
+    const { tripID } = req.params;
+    
+    AbandondATrip(tripID, (err, message) => {
+        res.json({
+            error: err,
+            message: message
+        })
+    });
+})
 
 module.exports = router;

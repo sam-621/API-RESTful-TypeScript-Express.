@@ -1,4 +1,4 @@
-const { Create, GetOne } = require('../lib/MySQL')
+const { Create, GetOne, Delete } = require('../lib/MySQL')
 
 const UserServices = {
 
@@ -30,8 +30,7 @@ const UserServices = {
                     return
                 }
 
-                //EVERYTHIN OK
-                const tripTaken = {
+                const tripTaken = { //EVERYTHIN OK
                     tripID,
                     userID
                 }
@@ -39,6 +38,12 @@ const UserServices = {
                     err ? cb(err, 'There was an error taking this trip') : cb(err, 'Your trip has been added succesfuly');
                 });
             })
+        })
+    },
+
+    AbandondATrip(id, cb) {
+        Delete('TripsTaken', 'ID', id, (err) =>  {
+             err ? cb(err, 'An error has ocurred') : cb(err, 'You have abandoned the trip succesfully'); 
         })
     }
 }
