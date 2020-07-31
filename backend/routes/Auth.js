@@ -1,30 +1,27 @@
 const { Router } = require('express')
 const router = Router();
-const { Register, Login } = require('../services/Auth');
+const { Register, Login } = require('../controllers/Auth');
 const { registerValidator, logInValidator } = require('../middlewares/userValidator')
 const { validationResult } = require('express-validator');
 
-router.post('/register',registerValidator, (req, res) => {
+router.post('/register',registerValidator, async (req, res) => {
 
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         res.json({
-            error: errors.errors,
+            error: errors.array(),
             message: 'Wrong data schema'
         });
         return
     } 
 
     const userData = req.body;
-    Register(userData, (err, message) => {
-        res.json({
-            error: err,
-            message: message
-        });
-    });
+    const json = await Register(userData);
+
+    res.json(json);
 });
 
-router.post('/login', logInValidator, (req, res) => {
+router.post('/login', logInValidator, async (req, res) => {
 
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -36,13 +33,9 @@ router.post('/login', logInValidator, (req, res) => {
     }
 
     const userData = req.body;
-    Login(userData, (err, token, message) => {
-        res.json({
-            error: err,
-            token: token,
-            message: message
-        });
-    });
+
+    const loginOrNot = await Login(userData);
+    res.json(loginOrNot);
 });
 
 module.exports = router

@@ -1,26 +1,40 @@
-const pool = require('./database/connection');
+const pool = require('../database/connection');
 
 const MySQL = {
     
-    GetOne(table, condition, id, callback) {
-        pool.query(`SELECT * FROM ${table} WHERE ${condition} = ?`, [id], (err, row) => {
-            if(err) {
-                return callback(err, null);
+    async GetOne(table, condition, id) {
+        try {
+            const [row] = await pool.query(`SELECT * FROM ${table} WHERE ${condition} = ?`, [id],);
+            const succesResponse = {
+                data: row,
+                message: succes
             }
-            
-            if(row) {
-                callback(null, row);
+            return succesResponse;
+
+        } catch (error) {
+
+            failureResponse = {
+                error: error,
+                message: 'An error has occurred'
             }
-        });
+        }
     },
 
-    GetMany(table, callback) {
-        pool.query(`SELECT * FROM ${table}`, (err, rows) => {
-            if(err) {
-                return callback(err, null);
+    async GetMany(table, callback) {
+        try {
+            const [rows] = await pool.query(`SELECT * FROM ${table}`);
+            const successResponse = {
+                data: rows,
+                message: 'got it successfully'
             }
-            callback(null, rows);
-        })
+            return successResponse;
+        } catch (error) {
+            const errorResponse = {
+                error: error,
+                message: 'there was an error'
+            }
+            return errorResponse;
+        }
     },
 
     Create(table, data, callback) {

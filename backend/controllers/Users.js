@@ -42,9 +42,9 @@ const UserServices = {
     },
 
     GetTrips(cb) {
-        GetMany('Trips', (err, trips) => {
-            err ? cb(err, trips, 'An error has ocurred getting the available trips') : cb(err, trips, 'you got it');
-        })
+        const trips = GetMany('Trips');
+        return trips
+        err ? cb(err, trips, 'An error has ocurred getting the available trips') : cb(err, trips, 'you got it');
     },
 
     GetTrip(id, cb) {

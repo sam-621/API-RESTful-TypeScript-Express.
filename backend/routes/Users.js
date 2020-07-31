@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const router = Router();
-const { takeTrip, GetTrips, GetTrip, AbandondATrip } = require('../services/Users');
+const { takeTrip, GetTrips, GetTrip, AbandondATrip } = require('../controllers/Users');
 const authJWT = require('../middlewares/authJWT');
 
 router.post('/taketrip/:tripID', authJWT, (req, res) => {
@@ -16,14 +16,14 @@ router.post('/taketrip/:tripID', authJWT, (req, res) => {
     });
 });
 
-router.get('/trips', (req, res) => {
-    GetTrips((err, trips, message) => {
-        res.json({
-            error: err,
-            trips: trips,
-            message: message
-        });
-    });
+router.get('/trips', async (req, res) => {
+    const response = await GetTrips();
+    res.json(response);
+    // {
+    //     error: err,
+    //     trips: trips,
+    //     message: message
+    // }
 });
 
 router.get('/trips/:tripID', (req, res) => {
