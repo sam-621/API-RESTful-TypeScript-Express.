@@ -1,62 +1,101 @@
-const { Create, GetOne, Delete, GetMany } = require('../lib/MySQL')
+//SELECT * FROM tripstaken INNER JOIN trips ON tripstaken.tripID = trips.ID; (doesnt matter)
+const pool = require('../database/connection');
 
 const UserServices = {
 
-    takeTrip(tripID, userID, cb) {
+    async takeTrip(tripID, userID) {
         let alreadyTaken = false;
 
-        GetOne('Trips', 'ID', tripID, (err, trip) => { //Verifying if trips exists
-            if(err) {
-                cb(err, 'There was an error taking this trip')
-                return
-            }
+        try {
+            //VERIFY IF TRIP EXISTS
+            const [trip] = await pool.query("SELECT * FROM Trips WHERE ID = ?", [tripID]);
+
             if(!trip.length) {
-                cb(true, 'This trip doesnt exist');
-                return
+                throw {
+                    error: true,
+                    message: 'This trip doesn exist'
+                }
             }
-            GetOne('tripstaken', 'userID', userID, (err, trip) => { //Verifying if trips hasnt taken by this user
-                if(err) {
-                    cb(err, 'There was an error taking this trip');
-                    return
-                }
-                trip.map((trip) => {
-                    console.log(trip)
-                    if(trip.tripID == tripID) {
-                        alreadyTaken = true
-                    };
-                });
-                if(alreadyTaken) {
-                    cb(true, 'You have alredy taken this trip')
-                    return
-                }
 
-                const tripTaken = { //EVERYTHIN OK
-                    tripID,
-                    userID
+            //VERIFY IF THE TRIP HAS ALREADY TAKEN BY THIS USER
+            const [trips_taken_By_This_User] = await pool.query("SELECT * FROM tripstaken WHERE userID = ?", [userID]);
+
+            trips_taken_By_This_User.map((trip) => {
+                if(trip.tripID == tripID) {
+                    alreadyTaken = true
+                };
+            });
+
+            if(alreadyTaken) {
+                throw {
+                    error: true,
+                    message: 'You have alredy taken this trip'
                 }
-                Create('TripsTaken', tripTaken, (err) => {
-                    err ? cb(err, 'There was an error taking this trip') : cb(err, 'Your trip has been added succesfuly');
-                });
-            })
-        })
+            }
+
+            //EVERYTHIN OK
+            const tripTaken = { 
+                tripID,
+                userID
+            }
+            await pool.query("INSERT INTO tripstaken SET ?", [tripTaken]);
+            return {
+                error: false,
+                message: 'Your trip has been added succesfuly'
+            }
+        } catch (error) {
+            return error
+        }
     },
 
-    GetTrips(cb) {
-        const trips = GetMany('Trips');
-        return trips
-        err ? cb(err, trips, 'An error has ocurred getting the available trips') : cb(err, trips, 'you got it');
+    async GetTrips() {
+        try {
+            const [trips] = await pool.query("SELECT * FROM Trips");
+            return {
+                err: false,
+                data: trips,
+                message: 'you got it'
+            }
+        } catch (error) {
+            return {
+                error: error,
+                data: null,
+                message: 'An error has ocurred getting the available trips'
+            }
+        }
     },
 
-    GetTrip(id, cb) {
-        GetOne('Trips', 'ID', id, (err, trip) => {
-            err ? cb(err, trip, 'An error has ocurred getting this trips') : cb(err, trip, 'you got it')
-        })
+    async GetTrip(id) {
+        try {
+            const [trip] = await pool.query("SELECT * FROM Trips WHERE ID = ?", [id]);
+            return {
+                error: false,
+                data: trip,
+                message: 'You got it'
+            }
+        
+        } catch (error) {
+            return {
+                error: error,
+                data: null,
+                message: 'An error has occurred'
+            }   
+        }
     },
 
-    AbandondATrip(id, cb) {
-        Delete('TripsTaken', 'ID', id, (err) =>  {
-             err ? cb(err, 'An error has ocurred') : cb(err, 'You have abandoned the trip succesfully'); 
-        })
+    async AbandondATrip(userID, tripID) {
+        try {
+            await pool.query("DELETE FROM tripstaken WHERE userID = ? AND tripID = ?", [userID, tripID]);
+            return {
+                error: false,
+                message: 'You have abandoned the trip succesfully'
+            }
+        } catch (error) {
+            return {
+                error: error,
+                message: 'An error has ocurred'
+            }
+        }
     }
 }
 

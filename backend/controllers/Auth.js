@@ -1,4 +1,3 @@
-const { Create, GetOne } = require('../lib/MySQL');
 const pool = require('../database/connection');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');

@@ -2,9 +2,9 @@ const { Router } = require('express');
 const authJWT = Router();
 const jwt = require('jsonwebtoken');
 const { secret_key } = require('../config');
-const { GetOne } = require('../lib/MySQL');
+const pool = require('../database/connection');
 
-authJWT.use((req, res, next) => {
+authJWT.use(async (req, res, next) => {
 
     const token = req.headers.authorization
     
@@ -13,35 +13,30 @@ authJWT.use((req, res, next) => {
             error: true,
             message: 'no token provided' 
         });
+        return
     }
 
-    jwt.verify(token, secret_key, (err, decoded) => {
-        if(err) {
+    try {
+        const decoded = await jwt.verify(token, secret_key);
+
+        const [user] = await pool.query("SELECT * FROM Users WHERE ID = ?",[decoded.id]);
+
+        if(!user.length) {
             res.json({
-                error: err,
-                message: err.message 
-            })
+                error: true,
+                message: 'What are you trying'
+            });
             return
         }
-        GetOne('Users', 'ID', decoded.id, (err, user) => {
-            if(err) {
-                res.json({
-                    error: err,
-                    message: 'there was an error on the server'
-                });
-                return
-            }
-            if(!user.length) {
-                res.json({
-                    error: true,
-                    message: 'What are you trying'
-                });
-                return
-            }
-            req.user = decoded;
-            next();
+
+        req.user = decoded;
+        next();
+    } catch (error) {
+        res.json({
+            error: error,
+            message: 'An error has occurred'
         })
-    });
+    }
 }); 
 
 module.exports = authJWT;
