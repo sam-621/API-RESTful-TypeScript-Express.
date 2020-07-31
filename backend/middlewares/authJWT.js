@@ -1,12 +1,12 @@
 const { Router } = require('express');
 const authJWT = Router();
-const jwt = require('jsonwebtoken');
-const { secret_key } = require('../config');
 const pool = require('../database/connection');
+const jwt = require('jsonwebtoken');
+const { token_secret_key } = require('../config');
 
 authJWT.use(async (req, res, next) => {
 
-    const token = req.headers.authorization
+    const token = req.headers.authorization;
     
     if(!token) {
         res.json({
@@ -17,7 +17,7 @@ authJWT.use(async (req, res, next) => {
     }
 
     try {
-        const decoded = await jwt.verify(token, secret_key);
+        const decoded = await jwt.verify(token, token_secret_key);
 
         const [user] = await pool.query("SELECT * FROM Users WHERE ID = ?",[decoded.id]);
 
@@ -35,7 +35,7 @@ authJWT.use(async (req, res, next) => {
         res.json({
             error: error,
             message: 'An error has occurred'
-        })
+        });
     }
 }); 
 

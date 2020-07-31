@@ -18,9 +18,9 @@ const UserServices = {
             }
 
             //VERIFY IF THE TRIP HAS ALREADY TAKEN BY THIS USER
-            const [trips_taken_By_This_User] = await pool.query("SELECT * FROM tripstaken WHERE userID = ?", [userID]);
+            const [userTrips] = await pool.query("SELECT * FROM Tripstaken WHERE userID = ?", [userID]);
 
-            trips_taken_By_This_User.map((trip) => {
+            userTrips.map((trip) => {
                 if(trip.tripID == tripID) {
                     alreadyTaken = true
                 };
@@ -38,7 +38,7 @@ const UserServices = {
                 tripID,
                 userID
             }
-            await pool.query("INSERT INTO tripstaken SET ?", [tripTaken]);
+            await pool.query("INSERT INTO Tripstaken SET ?", [tripTaken]);
             return {
                 error: false,
                 message: 'Your trip has been added succesfuly'
@@ -85,7 +85,7 @@ const UserServices = {
 
     async AbandondATrip(userID, tripID) {
         try {
-            await pool.query("DELETE FROM tripstaken WHERE userID = ? AND tripID = ?", [userID, tripID]);
+            await pool.query("DELETE FROM Tripstaken WHERE userID = ? AND tripID = ?", [userID, tripID]);
             return {
                 error: false,
                 message: 'You have abandoned the trip succesfully'

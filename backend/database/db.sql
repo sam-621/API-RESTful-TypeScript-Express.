@@ -32,3 +32,5 @@ ALTER TABLE Users ADD rol VARCHAR(10) NOT NULL DEFAULT 'user';
 DESCRIBE Users;
 
 DESCRIBE Trips;
+
+DESCRIBE Tripstaken;

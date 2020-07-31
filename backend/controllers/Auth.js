@@ -1,7 +1,7 @@
 const pool = require('../database/connection');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { secret_key } = require('../config');
+const { token_secret_key, token_expires_in } = require('../config');
 
 
 const AuthServices = {
@@ -18,20 +18,20 @@ const AuthServices = {
                 email,
                 username,
                 password: hashedPassword
-            }
+            };
 
             await pool.query("INSERT INTO Users SET ?", [newUser]);
 
             return {
-                error: null,
+                error: false,
                 message: 'You have been registered succesfully'
-            }
+            };
 
         } catch (err) {
             return {
                 error: err,
                 message: 'An error has occurred'
-            }
+            };
         }
     },
 
@@ -41,11 +41,19 @@ const AuthServices = {
             const [user] = await pool.query("SELECT * FROM Users WHERE email = ?", [email]);
 
             if(!user.length) {
-                throw { error: true, token: null, message: 'no user founded' };
+                throw { 
+                    error: true, 
+                    token: null, 
+                    message: 'no user founded' 
+                };
             }
 
             if(! await bcryptjs.compare(password, user[0].password)) {
-                throw { error: true, token: null, message: 'password doesnt match'}
+                throw { 
+                    error: true, 
+                    token: null, 
+                    message: 'password doesnt match'
+                }
             }
 
             const payload = {
@@ -53,7 +61,7 @@ const AuthServices = {
                 rol: user[0].rol
             }
 
-            const token = jwt.sign(payload, secret_key /*{ expiresIn: }*/);
+            const token = jwt.sign(payload, token_secret_key, { expiresIn: token_expires_in});
 
             return {
                 error: false,

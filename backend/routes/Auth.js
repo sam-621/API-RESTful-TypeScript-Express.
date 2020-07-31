@@ -1,41 +1,46 @@
-const { Router } = require('express')
+const { Router } = require('express');
 const router = Router();
 const { Register, Login } = require('../controllers/Auth');
-const { registerValidator, logInValidator } = require('../middlewares/userValidator')
+const { registerValidator, logInValidator } = require('../middlewares/userValidator'); //Validators schemas
 const { validationResult } = require('express-validator');
 
-router.post('/register',registerValidator, async (req, res) => {
 
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
+//REGISTER AN USER
+router.post('/register', registerValidator, async (req, res) => {
+
+    const dataErrorSchema = validationResult(req);
+    if(!dataErrorSchema.isEmpty()){
         res.json({
-            error: errors.array(),
+            error: dataErrorSchema.array(),
             message: 'Wrong data schema'
         });
         return
     } 
 
     const userData = req.body;
-    const json = await Register(userData);
+    const APIresponse = await Register(userData);
 
-    res.json(json);
+    res.json(APIresponse);
 });
 
+
+//LOGIN AN USER
 router.post('/login', logInValidator, async (req, res) => {
 
-    const errors = validationResult(req);
-    if(!errors.isEmpty()) {
+    const dataErrorSchema = validationResult(req);
+    if(!dataErrorSchema.isEmpty()) {
         res.json({
-            err: errors.array(),
+            err: dataErrorSchema.array(),
             token: null,
             message: 'wrong data schema'
         });
+        return
     }
 
     const userData = req.body;
 
-    const loginOrNot = await Login(userData);
-    res.json(loginOrNot);
+    const APIresponse = await Login(userData);
+    res.json(APIresponse);
 });
 
-module.exports = router
+module.exports = router;
