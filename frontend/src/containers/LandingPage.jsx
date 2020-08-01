@@ -14,7 +14,7 @@ const LandingPage = () => {
                     Fly and explore the spaceot only five centuries, but also the leap into electronic typesetting, 
                     remaining essentially unchanged. It was popularised in th 
                 </p>
-                <Link to="/logIn" className="Landing-btn">
+                <Link to="/register" className="Landing-btn">
                     Start to explore
                 </Link>
             </header>

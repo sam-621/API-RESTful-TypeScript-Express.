@@ -7,7 +7,7 @@ const Nav = ({ isLogged }) => {
     return(
         <nav>
             <div>
-                <Link>
+                <Link to="/">
                     <h1 className="ProjectName">Explore<strong className="Space">Space</strong></h1>
                 </Link>
             </div>

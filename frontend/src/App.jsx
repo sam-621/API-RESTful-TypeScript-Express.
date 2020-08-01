@@ -1,6 +1,7 @@
 import React from 'react';
 import './assets/styles/app.css'
 import LandingPage from './containers/LandingPage';
+import Register from './containers/Register';
 import {
     BrowserRouter,
     Route,
@@ -11,9 +12,11 @@ const App = () => {
     return(
         <BrowserRouter>
             <Switch>
-                <Route exact path="/">
-                    <LandingPage/>
-                </Route>
+
+                <Route exact path="/" component={LandingPage} />
+
+                <Route exact path="/register" component={Register} />
+                
             </Switch>
         </BrowserRouter>
     )
