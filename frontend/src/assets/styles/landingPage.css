@@ -1,0 +1,12 @@
+body{
+    margin: 0;
+}
+.LandingPage{
+    /* background-image: url('../img//background.jpg');
+    background-position: center;
+    background-size: contain; */
+    background-color: black;
+}
+.LandingPage h1{
+    color: white;
+}
