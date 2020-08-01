@@ -2,11 +2,32 @@ body{
     margin: 0;
 }
 .LandingPage{
-    /* background-image: url('../img//background.jpg');
+    /* height: 1700px; */
+    height: 74.3vh;
+    padding-top: 100px;
+    background-image: url('../img//background.jpg');
     background-position: center;
-    background-size: contain; */
-    background-color: black;
+    background-size: contain;
+    text-align: center;
 }
 .LandingPage h1{
+    font-size: 30px;
+    margin-top: 0;
     color: white;
+}
+.LandingPage hr{
+    margin: 0 30%;
+    box-shadow: 0 0 8px 0 white;
+}
+.LandingPage p{
+    color: white;
+    margin-bottom: 40px;
+}
+.Landing-btn{
+    background-color: #EBF4FF;
+    text-decoration: none;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px 0 white;
 }

@@ -7,7 +7,9 @@ const Nav = ({ isLogged }) => {
     return(
         <nav>
             <div>
-                <h1 className="ProjectName">Explore<strong className="Space">Space</strong></h1>
+                <Link>
+                    <h1 className="ProjectName">Explore<strong className="Space">Space</strong></h1>
+                </Link>
             </div>
             <div className="Links">
                 <Link to="/" className="Trips-link">
@@ -30,3 +32,11 @@ const Nav = ({ isLogged }) => {
 }
 
 export default Nav;
+
+// return <Redirect to={
+//     {
+//       pathname: '/unauthorized',
+//       state: {
+//         from: props.location
+//       }
+//     }

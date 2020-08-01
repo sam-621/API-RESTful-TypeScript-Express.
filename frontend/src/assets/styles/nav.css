@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 nav{
-    font-family: 'Roboto', sans-serif;
     display: flex;
     justify-content: space-between;
     padding: 20px;
@@ -11,12 +9,16 @@ nav div h1{
     color: white;
     font-weight: 400;
 }
+nav div a{
+    text-decoration: none;
+}
 .ProjectName{
     margin: 0;
 }
 .Space{
     font-weight: 300;
     color: #40E0D0;
+    margin-left: 5px;
 }
 .Links{
     align-items: center;
@@ -34,7 +36,7 @@ nav div h1{
 .Filled{
     padding: 5px 10px;
     border-radius: 5px;
-    box-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.60);
+    box-shadow: 0 0 15px 0 white;
     color: black;
     background-color: #EBF4FF;
 }

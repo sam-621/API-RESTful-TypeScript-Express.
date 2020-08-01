@@ -1,4 +1,5 @@
 import React from 'react';
+import './assets/styles/app.css'
 import LandingPage from './containers/LandingPage';
 import {
     BrowserRouter,
