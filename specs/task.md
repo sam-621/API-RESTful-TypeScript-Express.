@@ -36,13 +36,13 @@ Obviusly we won’t sell any trip, we just simulate. The app finish when you tak
 - Create auth services (/)
 - Create auth routes (/)
 - Create middleware to verify the token (/)
-- Create user services
-- Create user routes
+- Create user services(/)
+- Create user routes(/)
 - Create admin services
 - Create admin routes
 
 ## Frontend tasks
-- Landng page
+- Landng page(/2)
 - Register
 - Log in
 - Main
