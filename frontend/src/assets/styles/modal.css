@@ -1,0 +1,64 @@
+/* modal */
+.modal {
+    border-radius: 5px;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    border-radius: 10px;
+    margin: 15% auto; 
+    padding-bottom: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.closeModal-container{
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+}
+.closeModal{
+    cursor: pointer;
+    background: none;
+    border: none;
+    height: 30px;
+}
+.success-register{
+    color: #159500;
+}
+.toLogin{
+    color: #0057FF;
+}
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}

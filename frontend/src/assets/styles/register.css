@@ -40,8 +40,8 @@
 }
 .loader {
     text-align: center;
-    border: 5px solid #a1a1a1; /* Light grey */
-    border-top: 5px solid black; /* Blue */
+    border: 5px solid #a1a1a1;
+    border-top: 5px solid black; 
     border-radius: 50%;
     width: 45px;
     height: 45px;
@@ -52,69 +52,3 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-/* modal */
-.modal {
-    border-radius: 5px;
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content/Box */
-  .modal-content {
-    background-color: #fefefe;
-    border-radius: 10px;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding-bottom: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-    animation-name: animatetop;
-    animation-duration: 0.4s;
-  }
-  
-  /* The Close Button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .closeModal-container{
-      border-top-left-radius: 7px;
-      border-top-right-radius: 7px;
-      display: flex;
-      justify-content: flex-end;
-      margin-right: 10px;
-      /* background-color: #79d70f; */
-  }
-  .closeModal{
-    cursor: pointer;
-    background: none;
-    border: none;
-    height: 30px;
-  }
-  .success-register{
-      color: #159500;
-  }
-  .toLogin{
-      color: #0057FF;
-  }
-  @keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
-  }
