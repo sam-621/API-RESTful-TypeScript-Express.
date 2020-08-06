@@ -1,7 +1,8 @@
 import { Server } from './App';
+import { port } from './config/index.config';
 
 function Main() {
-    const server = new Server(3000);
+    const server = new Server(port);
     server.StartServer();
 }
 

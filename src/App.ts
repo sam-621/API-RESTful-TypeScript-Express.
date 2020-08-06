@@ -4,7 +4,7 @@ export class Server {
 
     private App: Application;
 
-    constructor(private port: number) {
+    constructor(private port: string) {
         this.App = Express();
         this.Settings();
     }
