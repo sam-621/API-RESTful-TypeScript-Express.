@@ -14,6 +14,8 @@ Create Table Users IF NOT EXIST(
 
 ALTER TABLE Users MODIFY password VARCHAR(100) NOT NULL;
 
+ALTER TABLE Users ADD rol VARCHAR(5) NOT NULL DEFAULT 'user';
+
 --followers: UserID who follow
 --followed: USERID who is being followed
 CREATE TABLE Friends(

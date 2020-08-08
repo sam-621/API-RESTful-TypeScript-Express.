@@ -7,3 +7,8 @@ export interface IUser {
     password: string,
     followers?: number
 }
+
+export interface ILoginUser {
+    email: string,
+    password: string
+}

@@ -1,7 +1,7 @@
 import Express, { Application } from 'express';
 import morgan from 'morgan';
+import NotFound from './middleware/NotFound.middlewares';
 import authRoutes from './routes/auth.routes';
-
 
 export class Server {
 
@@ -30,13 +30,7 @@ export class Server {
     }
 
     private MiddlewaresOutput() {
-        this.App.use((req, res) => {
-            res.status(404).json({
-                message: 'Not Found',
-                path: req.url,
-                statusCode: 404
-            })
-        })
+        this.App.use(NotFound);
     }
 
     public StartServer(): void {
