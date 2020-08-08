@@ -1,7 +1,8 @@
 import Express, { Application } from 'express';
 import morgan from 'morgan';
-import NotFound from './middleware/NotFound.middlewares';
+import NotFound from './middlewares/NotFound.middlewares';
 import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
 
 export class Server {
 
@@ -27,6 +28,7 @@ export class Server {
 
     private Routes() {
         this.App.use('/explorespace/api', authRoutes);
+        this.App.use('/explorespace/api', userRoutes);
     }
 
     private MiddlewaresOutput() {
