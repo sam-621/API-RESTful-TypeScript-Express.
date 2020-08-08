@@ -1,14 +1,12 @@
 import { Router } from 'express';
-import { PostController } from '../controllers/user.controllers';
-import { CreatePostValidator } from '../validators/post.validators';
+import { GetUserInfo } from '../controllers/user.controllers';
 import authMiddleware from '../middlewares/auth.middlewares';
 const router = Router();
 
-router.post(
-    '/post',
+router.get(
+    '/userinfo',
     authMiddleware,
-    CreatePostValidator,
-    PostController
-);
+    GetUserInfo
+)
 
 export default router;

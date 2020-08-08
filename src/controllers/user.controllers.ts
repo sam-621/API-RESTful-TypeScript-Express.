@@ -1,40 +1,30 @@
-import { Response } from 'express';
-import { validationResult } from 'express-validator';
-import { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } from 'http-status-codes';
-import { IRequest } from '../models/middleware.models';
+import { Request, Response } from 'express'; 
 import pool from '../database/poolConnection';
 import { RowDataPacket } from 'mysql2';
+import { IRequest } from '../models/middleware.models';
+import { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } from 'http-status-codes';
 
-export async function PostController(req: IRequest, res: Response): Promise<Response> {
-
-    const errors = validationResult(req);
-
-    if(! errors.isEmpty()) {
-        return res.status(BAD_REQUEST).json({
-            error: errors.array(),
-            statusCode: BAD_REQUEST,
-            data: null,
-            message: 'WRONG DATA SCHEMA'
-        });
-    }
-
+export async function GetUserInfo(req: IRequest, res: Response): Promise<Response> {
+    
+    const requestData = 'firstName, lastName, email, username, followers';
     const userID = req.user?.id;
-    const { description } = req.body;
-    const newPost = {
-        description,
-        createdAt: new Date(),
-        userID: userID
-    }
-
     try {
+        const [userInfo] = await pool.query<RowDataPacket[]>(`SELECT ${requestData} FROM Users WHERE ID = ?`, [userID]);
 
-        await pool.query<RowDataPacket[]>("INSERT INTO Posts SET ?", [newPost]);
+        if(!userInfo.length) {
+            return res.status(BAD_REQUEST).json({
+                error: true,
+                statusCode: BAD_REQUEST,
+                data: null,
+                message: 'NO USER FOUNDED'
+            });
+        }
 
         return res.status(OK).json({
             error: false,
             statusCode: OK,
-            data: null,
-            message: 'You posts have been publish successfully'
+            data: userInfo,
+            message: 'OK'
         });
     } catch (err) {
         return res.status(INTERNAL_SERVER_ERROR).json({

@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import NotFound from './middlewares/NotFound.middlewares';
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
+import postRoutes from './routes/posts.routes';
 
 export class Server {
 
@@ -29,6 +30,7 @@ export class Server {
     private Routes() {
         this.App.use('/explorespace/api', authRoutes);
         this.App.use('/explorespace/api', userRoutes);
+        this.App.use('/explorespace/api', postRoutes);
     }
 
     private MiddlewaresOutput() {
