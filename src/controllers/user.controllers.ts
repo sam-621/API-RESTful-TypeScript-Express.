@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'; 
+import { Response } from 'express'; 
 import pool from '../database/poolConnection';
 import { RowDataPacket } from 'mysql2';
 import { IRequest } from '../models/middleware.models';
