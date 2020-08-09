@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { PostController, getPosts } from '../controllers/posts.controllers';
+import { PostController, getPosts, getPost } from '../controllers/posts.controllers';
 import { CreatePostValidator } from '../validators/post.validators';
 import authMiddleware from '../middlewares/auth.middlewares';
 const router = Router();
@@ -13,4 +13,9 @@ router.route('/post')
     .get(
         getPosts
     )
+
+router.get(
+    '/post/:postID',
+    getPost
+)
 export default router;

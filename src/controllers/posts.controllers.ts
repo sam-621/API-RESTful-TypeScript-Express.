@@ -66,3 +66,32 @@ export async function getPosts(req: IRequest, res: Response): Promise<Response> 
         message: 'POSTS FOUNDED'
     });
 }
+
+export async function getPost(req: IRequest, res: Response) {
+
+    const { postID } = req.params;
+    try {
+        const [post] = await pool.query<RowDataPacket[]>("SELECT * FROM Posts WHERE ID = ?", [postID])
+
+        const [comments] = await pool.query<RowDataPacket[]>("SELECT * FROM Comments WHERE postID = ?", [postID]);
+
+        const postData = {
+            post,
+            postComments: comments
+        };
+
+        return res.status(OK).json({
+            error: false,
+            statusCode: OK,
+            data: postData,
+            message: 'POST'
+        }); 
+    } catch (err) {
+        return res.status(INTERNAL_SERVER_ERROR).json({
+            error: err,
+            statusCode: INTERNAL_SERVER_ERROR,
+            DATA: null,
+            message: 'INTERNAL SERVER ERROR'
+        });
+    }
+}
