@@ -5,7 +5,7 @@ import authMiddleware from '../middlewares/auth.middlewares';
 const router = Router();
 
 router.post(
-    '/:postID/comment',
+    '/comments/:postID/comment',
     authMiddleware,
     CommentsValidator,
     CommentAPost

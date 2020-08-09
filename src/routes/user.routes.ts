@@ -4,7 +4,7 @@ import authMiddleware from '../middlewares/auth.middlewares';
 const router = Router();
 
 router.get(
-    '/userinfo',
+    '/user/info',
     authMiddleware,
     GetUserInfo
 )

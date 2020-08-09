@@ -49,3 +49,34 @@ export async function LikeToPost(req: IRequest, res: Response): Promise<Response
         });
     }
 }
+
+export async function LikeToAComment(req: IRequest, res: Response) {
+
+    const { commentID } = req.params
+    const userID = req.user?.id;
+    const { commentLikes } = req.body;
+
+    let commentsLikesParsed = Number.parseInt(commentLikes);
+    commentsLikesParsed++;
+
+    try {
+        await pool.query("INSERT INTO CommentLikes SET ?", [ { userID, commentID } ]);
+
+        await pool.query("UPDATE Comments SET likes = ? WHERE ID = ?", [ commentsLikesParsed, commentID ]);
+
+        return res.status(OK).json({
+            error: false,
+            statusCode: OK,
+            data: null,
+            message: 'OK'
+        });
+
+    } catch (err) {
+        return res.status(INTERNAL_SERVER_ERROR).json({
+            error: err,
+            statusCode: INTERNAL_SERVER_ERROR,
+            data: null,
+            message: 'INTERNAL SERVER ERROR'
+        });
+    }
+}
