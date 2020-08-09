@@ -1,9 +1,12 @@
 import Express, { Application } from 'express';
 import morgan from 'morgan';
 import NotFound from './middlewares/NotFound.middlewares';
+
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import postRoutes from './routes/posts.routes';
+import likeRoutes from './routes/likes.routes';
+import commentsRoutes from './routes/comments.routes';
 
 export class Server {
 
@@ -31,6 +34,8 @@ export class Server {
         this.App.use('/explorespace/api', authRoutes);
         this.App.use('/explorespace/api', userRoutes);
         this.App.use('/explorespace/api', postRoutes);
+        this.App.use('/explorespace/api', likeRoutes);
+        this.App.use('/explorespace/api', commentsRoutes);
     }
 
     private MiddlewaresOutput() {
