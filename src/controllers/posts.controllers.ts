@@ -45,3 +45,24 @@ export async function PostController(req: IRequest, res: Response): Promise<Resp
         });
     }
 }
+
+export async function getPosts(req: IRequest, res: Response): Promise<Response> {
+
+    const [posts] = await pool.query<RowDataPacket[]>("SELECT * FROM Posts");
+
+    if(!posts.length) {
+        return res.status(OK).json({
+            error: false,
+            statusCode: OK,
+            data: null,
+            message: 'No posts recently created'
+        });
+    }
+
+    return res.status(OK).json({
+        error: false,
+        statusCode: OK,
+        data: posts,
+        message: 'POSTS FOUNDED'
+    });
+}
