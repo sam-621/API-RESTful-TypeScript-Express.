@@ -20,3 +20,8 @@ export const UpdateInfoValidator: ValidationChain[] = [
     check('email', 'insert a valid email').isEmail(),
     check('username', 'Insert a username').notEmpty().isString(),
 ]
+
+export const UpdatePasswordValitador: ValidationChain[] = [
+    check('oldPassword', 'Insert at least 6 characters').notEmpty().isLength({ min: 6 }),
+    check('newPassword', 'Insert at least 6 characters').notEmpty().isLength({ min: 6 })
+];
