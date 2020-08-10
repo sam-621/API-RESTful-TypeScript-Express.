@@ -48,8 +48,23 @@ export async function PostController(req: IRequest, res: Response): Promise<Resp
 
 export async function getPosts(req: IRequest, res: Response): Promise<Response> {
 
-    const [posts] = await pool.query<RowDataPacket[]>("SELECT * FROM Posts");
-
+    const [posts] = await pool.query<RowDataPacket[]>(`SELECT 
+                                                        Users.ID, 
+                                                        Users.firstName, 
+                                                        Users.username, 
+                                                        Posts.ID AS postID, 
+                                                        Posts.description, 
+                                                        Posts.createdAt, 
+                                                        Posts.comments, 
+                                                        Posts.likes 
+                                                      FROM 
+                                                        Users 
+                                                      INNER JOIN 
+                                                        Posts 
+                                                      ON 
+                                                        Users.ID = Posts.userID;`
+                                                    );
+console.log(posts)
     if(!posts.length) {
         return res.status(OK).json({
             error: false,

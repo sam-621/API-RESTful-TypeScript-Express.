@@ -24,6 +24,10 @@ CREATE TABLE Friends(
     followed INT NOT NULL   
 );
 
+ALTER TABLE Friends DROP COLUMN followers;
+
+ALTER TABLE Friends ADD follower INT NOT NULL;
+
 --coments: Number of post comments
 --likes: Number of post likes
 --userID: Who creates the post
