@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { GetUserInfo } from '../controllers/user.controllers';
+import { GetUserInfo, UpdateUserInfo } from '../controllers/user.controllers';
+import { UpdateInfoValidator } from '../validators/user.validators';
 import authMiddleware from '../middlewares/auth.middlewares';
 const router = Router();
 
@@ -8,5 +9,12 @@ router.get(
     authMiddleware,
     GetUserInfo
 )
+
+router.put(
+    '/user/update',
+    authMiddleware,
+    UpdateInfoValidator,
+    UpdateUserInfo
+);
 
 export default router;
