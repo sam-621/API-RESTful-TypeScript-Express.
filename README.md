@@ -1,4 +1,4 @@
-# ExploreSpace API
+# Twitter Clone API
 
 ## Getting started
 
