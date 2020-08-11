@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rogeliosamuel621/ExploreSpace-API"
+    "url": "https://github.com/rogeliosamuel621/Twitter-Clone-API"
   },
   "keywords": [],
   "author": "@rogeliosamuel21",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rogeliosamuel621/ExploreSpace-API/issues"
+    "url": "https://github.com/rogeliosamuel621/Twitter-Clone-API/issues"
   },
-  "homepage": "https://github.com/rogeliosamuel621/ExploreSpace-API#readme",
+  "homepage": "https://github.com/rogeliosamuel621/Twitter-Clone-API#readme",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.7",
