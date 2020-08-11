@@ -51,37 +51,46 @@ export async function PostController(req: IRequest, res: Response): Promise<Resp
 
 export async function getPosts(req: IRequest, res: Response): Promise<Response> {
 
-    const [posts] = await pool.query<RowDataPacket[]>(`SELECT 
-                                                        Users.ID, 
-                                                        Users.firstName, 
-                                                        Users.username, 
-                                                        Posts.ID AS postID, 
-                                                        Posts.description, 
-                                                        Posts.createdAt, 
-                                                        Posts.comments, 
-                                                        Posts.likes 
-                                                      FROM 
-                                                        Users 
-                                                      INNER JOIN 
-                                                        Posts 
-                                                      ON 
-                                                        Users.ID = Posts.userID;`
-                                                    );
-    if(!posts.length) {
+    try {
+        const [posts] = await pool.query<RowDataPacket[]>(`SELECT 
+                                                            Users.ID, 
+                                                            Users.firstName, 
+                                                            Users.username, 
+                                                            Posts.ID AS postID, 
+                                                            Posts.description, 
+                                                            Posts.createdAt, 
+                                                            Posts.comments, 
+                                                            Posts.likes 
+                                                          FROM 
+                                                            Users 
+                                                          INNER JOIN 
+                                                            Posts 
+                                                          ON 
+                                                            Users.ID = Posts.userID;`
+                                                        );
+        if(!posts.length) {
+            return res.status(OK).json({
+                error: false,
+                statusCode: OK,
+                data: null,
+                message: 'No posts recently created'
+            });
+        }
+
         return res.status(OK).json({
             error: false,
             statusCode: OK,
-            data: null,
-            message: 'No posts recently created'
+            data: posts,
+            message: 'POSTS FOUNDED'
         });
+    } catch (err) {
+        return res.status(INTERNAL_SERVER_ERROR).json({
+            error: err,
+            statusCode: INTERNAL_SERVER_ERROR,
+            data: null,
+            message: 'INTERNAL SERVER ERROR'
+        })
     }
-
-    return res.status(OK).json({
-        error: false,
-        statusCode: OK,
-        data: posts,
-        message: 'POSTS FOUNDED'
-    });
 }
 
 export async function getPost(req: IRequest, res: Response) {

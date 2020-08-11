@@ -1,6 +1,7 @@
 import Express, { Application } from 'express';
 import morgan from 'morgan';
 import NotFound from './middlewares/NotFound.middlewares';
+import APIkey from './middlewares/apiKey.middlewares';
 
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
@@ -29,6 +30,7 @@ export class Server {
         this.App.use(morgan('dev'));
         this.App.use(Express.json());
         this.App.use(Express.urlencoded({ extended: false }));
+        this.App.use(APIkey);
     }
 
     private Routes() {

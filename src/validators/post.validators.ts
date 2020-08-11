@@ -9,5 +9,10 @@ export const LikesValidator: ValidationChain[] = [
 ];
 
 export const CommentsValidator: ValidationChain[] = [
-    check('content', 'Write something').notEmpty().isString()
+    check('content', 'Write something').notEmpty().isString(),
+    check('comments', 'must have some').notEmpty()
 ];
+
+export const likeToCommentValidator: ValidationChain[] = [
+    check('commentLikes', 'must not be empty').notEmpty()
+]

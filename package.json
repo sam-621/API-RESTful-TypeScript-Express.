@@ -1,7 +1,7 @@
 {
   "name": "explorespace-api",
-  "version": "0.0.0",
-  "description": "",
+  "version": "1.0.0",
+  "description": "An API for ExploreSpace social media. Created with Typescript and in order to practice and learn",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.ts",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rogeliosamuel621/ExploreSpace-social-media.git"
+    "url": "https://github.com/rogeliosamuel621/ExploreSpace-API"
   },
   "keywords": [],
-  "author": "",
+  "author": "@rogeliosamuel21",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rogeliosamuel621/ExploreSpace-social-media/issues"
+    "url": "https://github.com/rogeliosamuel621/ExploreSpace-API/issues"
   },
-  "homepage": "https://github.com/rogeliosamuel621/ExploreSpace-social-media#readme",
+  "homepage": "https://github.com/rogeliosamuel621/ExploreSpace-API#readme",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.7",

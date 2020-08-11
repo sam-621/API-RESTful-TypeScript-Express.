@@ -54,6 +54,17 @@ export async function LikeToPost(req: IRequest, res: Response): Promise<Response
 
 export async function LikeToAComment(req: IRequest, res: Response) {
 
+    const errors = validationResult(req);
+
+    if(! errors.isEmpty()) {
+        return res.status(BAD_REQUEST).json({
+            error: errors.array(),
+            statusCode: BAD_REQUEST,
+            data: null,
+            message: 'WRONG DATA SCHEMA'
+        });
+    }
+
     const { commentID } = req.params
     const userID = req.user?.id;
     const { commentLikes } = req.body;

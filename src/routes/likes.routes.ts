@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { LikeToPost, LikeToAComment } from '../controllers/likes.controllers';
-import { LikesValidator } from '../validators/post.validators';
+import { LikesValidator, likeToCommentValidator } from '../validators/post.validators';
 import authMiddleware from '../middlewares/auth.middlewares';
 const router = Router();
 
@@ -14,6 +14,7 @@ router.post(
 router.post(
     '/comments/:commentID/like',
     authMiddleware,
+    likeToCommentValidator,
     LikeToAComment
 )
 
