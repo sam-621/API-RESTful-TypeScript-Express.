@@ -1,17 +1,26 @@
 import { Response } from 'express'; 
-import pool from '../database/poolConnection';
-import { RowDataPacket } from 'mysql2';
-import { IRequest } from '../models/middleware.models';
 import { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } from 'http-status-codes';
+import { RowDataPacket } from 'mysql2';
 import { validationResult } from 'express-validator';
 import bcryptjs from 'bcryptjs';
+
+import pool from '../database/poolConnection';
+import { IRequest } from '../models/middleware.models';
 
 export async function GetUserInfo(req: IRequest, res: Response): Promise<Response> {
     
     const requestData = 'firstName, lastName, email, username, followers';
     const userID = req.user?.id;
     try {
-        const [userInfo] = await pool.query<RowDataPacket[]>(`SELECT ${requestData} FROM Users WHERE ID = ?`, [userID]);
+        const [userInfo] = await pool.query<RowDataPacket[]>(`SELECT
+                                                                firstName, 
+                                                                lastName, 
+                                                                email, 
+                                                                username, 
+                                                                followers      
+                                                              FROM Users WHERE ID = ?`, [userID]);
+                                                              
+        const [userPosts] = await pool.query<RowDataPacket[]>("SELECT * FROM Posts WHERE userID = ?", [userID]);
 
         if(!userInfo.length) {
             return res.status(BAD_REQUEST).json({
@@ -22,12 +31,17 @@ export async function GetUserInfo(req: IRequest, res: Response): Promise<Respons
             });
         }
 
+        const responseData = {
+            userInfo,
+            userPosts
+        }
         return res.status(OK).json({
             error: false,
             statusCode: OK,
-            data: userInfo,
+            data: responseData,
             message: 'OK'
         });
+        
     } catch (err) {
         return res.status(INTERNAL_SERVER_ERROR).json({
             error: err,

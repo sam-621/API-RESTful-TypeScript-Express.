@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR, NOT_FOUND, UNAUTHORIZED } from 'http-status-codes';
-import pool from '../database/poolConnection';
 import { RowDataPacket } from 'mysql2';
 import bcryptjs from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+
+import pool from '../database/poolConnection';
 import { IUser, ILoginUser } from '../models/user.models';
 import { IPayload } from '../models/token.models';
-import { sign } from 'jsonwebtoken';
-import { secret_token } from '../config/index.config';
+import { secret_token, expires_in } from '../config/index.config';
 
 export async function RegisterController(req: Request, res: Response): Promise<Response> {
 
@@ -18,7 +19,7 @@ export async function RegisterController(req: Request, res: Response): Promise<R
             error: errors.array(),
             statusCode: BAD_REQUEST,
             data: null,
-            message: 'Wrong data schema'
+            message: 'WRONG DATA SCHEMA'
         });
     }
 
@@ -49,7 +50,7 @@ export async function RegisterController(req: Request, res: Response): Promise<R
             error: err,
             statusCode: INTERNAL_SERVER_ERROR,
             data: null,
-            message: 'Server error'
+            message: 'INTERNAL SERVER ERROR'
         });
     }
 }
@@ -70,7 +71,11 @@ export async function LogInController(req: Request, res: Response): Promise<Resp
     const { email, password }: ILoginUser = req.body;
 
     try {
-        const [user] = await pool.query<RowDataPacket[]>("SELECT ID, password, rol from Users WHERE email = ?", [email]);
+        const [user] = await pool.query<RowDataPacket[]>(`SELECT 
+                                                            ID, 
+                                                            password, 
+                                                            rol 
+                                                         FROM Users WHERE email = ?`, [email]);
 
         if(!user.length) {
             return res.status(NOT_FOUND).json({
@@ -97,7 +102,7 @@ export async function LogInController(req: Request, res: Response): Promise<Resp
             rol: user[0].rol
         }
 
-        const token = sign(payload, secret_token, /*{ expiresIn: 1+'s' }*/ );
+        const token = sign(payload, secret_token, { expiresIn: expires_in } );
 
         return res.status(OK).json({
             error: false,

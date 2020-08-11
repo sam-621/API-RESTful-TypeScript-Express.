@@ -5,7 +5,7 @@ export const CreatePostValidator: ValidationChain[] = [
 ];
 
 export const LikesValidator: ValidationChain[] = [
-    check('postLikes', 'Likes must be a number').isInt()
+    check('postLikes', 'Likes must be a number').notEmpty()
 ];
 
 export const CommentsValidator: ValidationChain[] = [

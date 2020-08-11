@@ -1,11 +1,13 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { BAD_REQUEST, UNAUTHORIZED, INTERNAL_SERVER_ERROR } from 'http-status-codes';
+import { RowDataPacket } from 'mysql2';
+
 import { secret_token } from '../config/index.config';
 import { IRequest } from '../models/middleware.models';
 import { IDecoded } from '../models/token.models';
 import pool from '../database/poolConnection';
-import { RowDataPacket } from 'mysql2';
+
 const authMiddleware = Router();
 
 authMiddleware.use(async (req: IRequest, res: Response, next: NextFunction) => {

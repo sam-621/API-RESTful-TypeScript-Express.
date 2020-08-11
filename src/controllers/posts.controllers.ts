@@ -1,9 +1,10 @@
 import { Response } from 'express';
 import { validationResult } from 'express-validator';
 import { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } from 'http-status-codes';
+import { RowDataPacket } from 'mysql2';
+
 import { IRequest } from '../models/middleware.models';
 import pool from '../database/poolConnection';
-import { RowDataPacket } from 'mysql2';
 
 export async function PostController(req: IRequest, res: Response): Promise<Response> {
 
@@ -20,6 +21,7 @@ export async function PostController(req: IRequest, res: Response): Promise<Resp
 
     const userID = req.user?.id;
     const { description } = req.body;
+
     const newPost = {
         description,
         createdAt: new Date(),
@@ -34,8 +36,9 @@ export async function PostController(req: IRequest, res: Response): Promise<Resp
             error: false,
             statusCode: OK,
             data: null,
-            message: 'You posts have been publish successfully'
+            message: 'Your posts have been published successfully'
         });
+
     } catch (err) {
         return res.status(INTERNAL_SERVER_ERROR).json({
             error: err,
@@ -64,7 +67,6 @@ export async function getPosts(req: IRequest, res: Response): Promise<Response> 
                                                       ON 
                                                         Users.ID = Posts.userID;`
                                                     );
-console.log(posts)
     if(!posts.length) {
         return res.status(OK).json({
             error: false,
@@ -85,9 +87,9 @@ console.log(posts)
 export async function getPost(req: IRequest, res: Response) {
 
     const { postID } = req.params;
+
     try {
         const [post] = await pool.query<RowDataPacket[]>("SELECT * FROM Posts WHERE ID = ?", [postID])
-
         const [comments] = await pool.query<RowDataPacket[]>("SELECT * FROM Comments WHERE postID = ?", [postID]);
 
         const postData = {
@@ -99,7 +101,7 @@ export async function getPost(req: IRequest, res: Response) {
             error: false,
             statusCode: OK,
             data: postData,
-            message: 'POST'
+            message: 'POSTS'
         }); 
     } catch (err) {
         return res.status(INTERNAL_SERVER_ERROR).json({

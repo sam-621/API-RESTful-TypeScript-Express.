@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { validationResult } from 'express-validator';
 import { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } from 'http-status-codes';
+
 import { IRequest } from '../models/middleware.models';
 import pool from '../database/poolConnection';
 
@@ -20,6 +21,7 @@ export async function CommentAPost(req: IRequest, res: Response): Promise<Respon
     const { postID } = req.params;
     const userID = req.user?.id;
     const { content, comments } = req.body;
+
     let postcommentsParsed = Number.parseInt(comments);
     postcommentsParsed++;
     
@@ -39,7 +41,7 @@ export async function CommentAPost(req: IRequest, res: Response): Promise<Respon
             error: false,
             statusCode: OK,
             data: null,
-            message: 'COMMENT CREATED'
+            message: 'Comment created'
         });
     
     } catch (err) {

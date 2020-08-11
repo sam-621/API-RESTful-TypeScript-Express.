@@ -1,12 +1,14 @@
 import { Response } from 'express';
 import { IRequest } from '../models/middleware.models'
 import { INTERNAL_SERVER_ERROR, OK, BAD_REQUEST } from 'http-status-codes';
-import pool from '../database/poolConnection';
 import { validationResult } from 'express-validator';
+
+import pool from '../database/poolConnection';
 
 export async function Follow(req: IRequest, res: Response): Promise<Response> {
 
     const errors = validationResult(req);
+
     if(! errors.isEmpty()) {
         return res.status(BAD_REQUEST).json({
             error: errors.array(),
@@ -36,7 +38,7 @@ export async function Follow(req: IRequest, res: Response): Promise<Response> {
             error: false,
             statusCode: OK,
             data: null,
-            message: 'Now you are following'
+            message: 'Now you are following' // + username
         });
 
     } catch (err) {

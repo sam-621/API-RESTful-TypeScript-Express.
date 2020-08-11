@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { validationResult } from 'express-validator';
 import { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } from 'http-status-codes';
+
 import { IRequest } from '../models/middleware.models';
 import pool from '../database/poolConnection';
 
@@ -16,6 +17,7 @@ export async function LikeToPost(req: IRequest, res: Response): Promise<Response
             message: 'WRONG DATA SCHEMA'
         });
     }
+
     const { postID } = req.params;
     const userID = req.user?.id;
     const { postLikes } = req.body;
@@ -61,7 +63,6 @@ export async function LikeToAComment(req: IRequest, res: Response) {
 
     try {
         await pool.query("INSERT INTO CommentLikes SET ?", [ { userID, commentID } ]);
-
         await pool.query("UPDATE Comments SET likes = ? WHERE ID = ?", [ commentsLikesParsed, commentID ]);
 
         return res.status(OK).json({
