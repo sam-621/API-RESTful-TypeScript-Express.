@@ -21,7 +21,7 @@ npm run build
 npm run production 
 ```
 
-## Builded with
+## Built with
 - Node
 - Typescript
 - MySQL
