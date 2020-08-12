@@ -1,6 +1,6 @@
 {
   "name": "explorespace-api",
-  "version": "1.0.0",
+  "version": "1.011.0",
   "description": "An API for ExploreSpace social media. Created with Typescript and in order to practice and learn",
   "main": "index.js",
   "scripts": {

@@ -1,5 +1,6 @@
 import Express, { Application } from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import NotFound from './middlewares/NotFound.middlewares';
 import APIkey from './middlewares/apiKey.middlewares';
 
@@ -27,6 +28,7 @@ export class Server {
     }
 
     private MiddlewaresInput() {
+        this.App.use(cors());
         this.App.use(morgan('dev'));
         this.App.use(Express.json());
         this.App.use(Express.urlencoded({ extended: false }));
