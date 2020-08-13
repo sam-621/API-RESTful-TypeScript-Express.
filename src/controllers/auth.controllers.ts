@@ -26,6 +26,16 @@ export async function RegisterController(req: Request, res: Response): Promise<R
     const { firstName, lastName, email, username, password }: IUser = req.body;
 
     try {
+        const [user] = await pool.query<RowDataPacket[]>("SELECT email FROM Users WHERE email = ?", [email]);
+
+        if(user.length) {
+            return res.json({
+                error: true,
+                statusCode: BAD_REQUEST,
+                data: null,
+                message: 'There is already someone registered with that email'
+            });
+        }
         const hashedPassword = await bcryptjs.hash(password, 10);
 
         const newUser = {
