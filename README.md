@@ -1,4 +1,4 @@
-# Twitter Clone API
+# SocialMedia-API
 
 ## Getting started
 
