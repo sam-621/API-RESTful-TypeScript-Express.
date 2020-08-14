@@ -10,11 +10,11 @@ export async function LikeToPost(req: IRequest, res: Response): Promise<Response
     const errors = validationResult(req);
 
     if(!errors.isEmpty()) {
-        return res.status(BAD_REQUEST).json({
+        return res.json({
             error: errors.array(),
             statusCode: BAD_REQUEST,
             data: null,
-            message: 'WRONG DATA SCHEMA'
+            message: 'Wrong data schema'
         });
     }
 
@@ -35,7 +35,7 @@ export async function LikeToPost(req: IRequest, res: Response): Promise<Response
         await pool.query("INSERT INTO Likes SET ?", [newLike]); 
         await pool.query("UPDATE Posts SET likes = ? WHERE ID = ?", [postLikesParsed, postID]);
 
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: null,
@@ -57,11 +57,11 @@ export async function LikeToAComment(req: IRequest, res: Response) {
     const errors = validationResult(req);
 
     if(! errors.isEmpty()) {
-        return res.status(BAD_REQUEST).json({
+        return res.json({
             error: errors.array(),
             statusCode: BAD_REQUEST,
             data: null,
-            message: 'WRONG DATA SCHEMA'
+            message: 'Wrong data schema'
         });
     }
 
@@ -76,7 +76,7 @@ export async function LikeToAComment(req: IRequest, res: Response) {
         await pool.query("INSERT INTO CommentLikes SET ?", [ { userID, commentID } ]);
         await pool.query("UPDATE Comments SET likes = ? WHERE ID = ?", [ commentsLikesParsed, commentID ]);
 
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: null,

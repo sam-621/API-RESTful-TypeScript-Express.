@@ -10,11 +10,11 @@ export async function Follow(req: IRequest, res: Response): Promise<Response> {
     const errors = validationResult(req);
 
     if(! errors.isEmpty()) {
-        return res.status(BAD_REQUEST).json({
+        return res.json({
             error: errors.array(),
             statusCode: BAD_REQUEST,
             data: null,
-            message: 'WRONG DATA SCHEMA'
+            message: 'Wrong data schema'
         });
     }
 
@@ -34,7 +34,7 @@ export async function Follow(req: IRequest, res: Response): Promise<Response> {
         await pool.query('INSERT INTO Friends SET ?', [newFriends]);
         await pool.query('UPDATE Users SET followers = ? WHERE ID = ?', [followersParsed, followed]);
 
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: null,

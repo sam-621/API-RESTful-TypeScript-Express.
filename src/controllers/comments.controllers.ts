@@ -10,11 +10,11 @@ export async function CommentAPost(req: IRequest, res: Response): Promise<Respon
     const errors = validationResult(req);
 
     if(!errors.isEmpty()) {
-        return res.status(BAD_REQUEST).json({
+        return res.json({
             error: errors.array(),
             statusCode: BAD_REQUEST,
             data: null,
-            message: 'WRONG DATA SHEMA'
+            message: 'Wrong data schema'
         });
     }
 
@@ -37,7 +37,7 @@ export async function CommentAPost(req: IRequest, res: Response): Promise<Respon
 
         await pool.query("UPDATE Posts SET comments = ? WHERE ID = ?", [postcommentsParsed, postID]);
 
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: null,

@@ -15,11 +15,11 @@ export async function RegisterController(req: Request, res: Response): Promise<R
     const errors = validationResult(req);
 
     if(!errors.isEmpty()) {
-        return res.status(BAD_REQUEST).json({
+        return res.json({
             error: errors.array(),
             statusCode: BAD_REQUEST,
             data: null,
-            message: 'WRONG DATA SCHEMA'
+            message: 'Wrong data schema'
         });
     }
 
@@ -48,7 +48,7 @@ export async function RegisterController(req: Request, res: Response): Promise<R
 
         await pool.query("INSERT INTO Users SET ?", [newUser]);
         
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: null,
@@ -70,11 +70,11 @@ export async function LogInController(req: Request, res: Response): Promise<Resp
     const errors = validationResult(req);
 
     if(!errors.isEmpty()) {
-        return res.status(BAD_REQUEST).json({
+        return res.json({
             error: errors.array(),
             statusCode: BAD_REQUEST,
             data: null,
-            message: 'WRONG DATA SCHEMA'
+            message: 'Wrong data schema'
         });
     }
 
@@ -88,20 +88,20 @@ export async function LogInController(req: Request, res: Response): Promise<Resp
                                                          FROM Users WHERE email = ?`, [email]);
 
         if(!user.length) {
-            return res.status(NOT_FOUND).json({
+            return res.json({
                 error: true,
                 statusCode: NOT_FOUND,
                 data: null,
-                message: 'NO USER FOUNDED'
+                message: 'Wrong credentials'
             });
         }
 
         if(! await bcryptjs.compare(password, user[0].password)) {
-            return res.status(UNAUTHORIZED).json({
+            return res.json({
                 error: true,
                 statusCode: UNAUTHORIZED,
                 data: null,
-                message: 'PASSWORDS DONT MATCH'
+                message: 'Wrong credentials'
             });
         }
 

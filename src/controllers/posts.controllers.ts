@@ -11,11 +11,11 @@ export async function PostController(req: IRequest, res: Response): Promise<Resp
     const errors = validationResult(req);
 
     if(! errors.isEmpty()) {
-        return res.status(BAD_REQUEST).json({
+        return res.json({
             error: errors.array(),
             statusCode: BAD_REQUEST,
             data: null,
-            message: 'WRONG DATA SCHEMA'
+            message: 'Wrong data schema'
         });
     }
 
@@ -32,7 +32,7 @@ export async function PostController(req: IRequest, res: Response): Promise<Resp
 
         await pool.query<RowDataPacket[]>("INSERT INTO Posts SET ?", [newPost]);
 
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: null,
@@ -69,7 +69,7 @@ export async function getPosts(req: IRequest, res: Response): Promise<Response> 
                                                             Users.ID = Posts.userID;`
                                                         );
         if(!posts.length) {
-            return res.status(OK).json({
+            return res.json({
                 error: false,
                 statusCode: OK,
                 data: null,
@@ -77,7 +77,7 @@ export async function getPosts(req: IRequest, res: Response): Promise<Response> 
             });
         }
 
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: posts,
@@ -106,7 +106,7 @@ export async function getPost(req: IRequest, res: Response) {
             postComments: comments
         };
 
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: postData,

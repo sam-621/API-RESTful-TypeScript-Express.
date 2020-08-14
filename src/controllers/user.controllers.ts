@@ -9,7 +9,6 @@ import { IRequest } from '../models/middleware.models';
 
 export async function GetUserInfo(req: IRequest, res: Response): Promise<Response> {
     
-    const requestData = 'firstName, lastName, email, username, followers';
     const userID = req.user?.id;
     try {
         const [userInfo] = await pool.query<RowDataPacket[]>(`SELECT
@@ -23,7 +22,7 @@ export async function GetUserInfo(req: IRequest, res: Response): Promise<Respons
         const [userPosts] = await pool.query<RowDataPacket[]>("SELECT * FROM Posts WHERE userID = ?", [userID]);
 
         if(!userInfo.length) {
-            return res.status(BAD_REQUEST).json({
+            return res.json({
                 error: true,
                 statusCode: BAD_REQUEST,
                 data: null,
@@ -35,7 +34,7 @@ export async function GetUserInfo(req: IRequest, res: Response): Promise<Respons
             userInfo,
             userPosts
         }
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: responseData,
@@ -56,11 +55,11 @@ export async function UpdateUserInfo(req: IRequest, res: Response): Promise<Resp
 
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
-        return res.status(BAD_REQUEST).json({
+        return res.json({
             error: errors.array(),
             statusCode: BAD_REQUEST,
             data: null,
-            message: 'WRONG DATA SCHEMA'
+            message: 'Wrong data schema'
         });
     }
 
@@ -70,7 +69,7 @@ export async function UpdateUserInfo(req: IRequest, res: Response): Promise<Resp
     try {
         await pool.query("UPDATE Users SET ? WHERE ID = ?", [userDataUpdated, userID]);
 
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: null,
@@ -92,11 +91,11 @@ export async function UpdatePasswordController(req: IRequest, res: Response): Pr
     const errors = validationResult(req);
 
     if(!errors.isEmpty()) {
-        return res.status(BAD_REQUEST).json({
+        return res.json({
             error: errors.array(),
             statusCode: BAD_REQUEST,
             data: null,
-            message: 'WRONG DATA SCHEMA'
+            message: 'Wrong data schema'
         });
     }
     
@@ -107,7 +106,7 @@ export async function UpdatePasswordController(req: IRequest, res: Response): Pr
         const [user] = await pool.query<RowDataPacket[]>("SELECT password FROM Users WHERE ID = ?", [userID]);
 
         if(! await bcryptjs.compare(oldPassword, user[0].password)) {
-            return res.status(BAD_REQUEST).json({
+            return res.json({
                 error: true,
                 statusCode: BAD_REQUEST,
                 data: null,
@@ -119,7 +118,7 @@ export async function UpdatePasswordController(req: IRequest, res: Response): Pr
 
         await pool.query("UPDATE Users SET password = ? WHERE ID = ?", [hashedUpdatedPassword, userID]);
 
-        return res.status(OK).json({
+        return res.json({
             error: false,
             statusCode: OK,
             data: null,
