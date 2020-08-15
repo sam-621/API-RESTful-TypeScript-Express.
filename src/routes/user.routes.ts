@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { GetUserInfo, UpdateUserInfo, UpdatePasswordController } from '../controllers/user.controllers';
+import {
+    GetUserInfo, 
+    UpdateUserInfo, 
+    UpdatePasswordController, 
+    GetHomeUserInfo
+} from '../controllers/user.controllers';
 import { UpdateInfoValidator, UpdatePasswordValitador } from '../validators/user.validators';
 import authMiddleware from '../middlewares/auth.middlewares';
 const router = Router();
@@ -8,6 +13,12 @@ router.get(
     '/user/info',
     authMiddleware,
     GetUserInfo
+)
+
+router.get(
+    '/user/home',
+    authMiddleware,
+    GetHomeUserInfo
 )
 
 router.put(
