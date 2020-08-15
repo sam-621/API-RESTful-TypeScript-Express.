@@ -134,3 +134,24 @@ export async function UpdatePasswordController(req: IRequest, res: Response): Pr
         });
     }
 }
+
+export async function GetHomeUserInfo(req: IRequest, res: Response): Promise<Response> {
+
+    try {
+        const [userInfo] = await pool.query("SELECT firstName, username FROM Users WHERE ID = ?", [req.user?.id]);
+
+        return res.json({
+            error: false,
+            statusCode: OK,
+            data: userInfo,
+            message: 'OK'
+        });
+    } catch (err) {
+        return res.json({
+            error: err,
+            statusCode: INTERNAL_SERVER_ERROR,
+            data: null,
+            message: 'INTERNAL SERVER ERROR'
+        });
+    }
+}
