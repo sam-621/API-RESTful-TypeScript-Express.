@@ -155,3 +155,28 @@ export async function GetHomeUserInfo(req: IRequest, res: Response): Promise<Res
         });
     }
 }
+
+export async function GetAllUsers(req: IRequest, res: Response): Promise<Response> {
+    try {
+        const [users] = await pool.query<RowDataPacket[]>(`SELECT
+                                                            ID,
+                                                            firstName,
+                                                            username
+                                                          FROM
+                                                            Users`);
+
+        return res.json({
+            error: false,
+            statusCode: OK,
+            data: users,
+            message: 'USERS'
+        });
+    } catch (err) {
+        return res.json({
+            error: err,
+            statusCode: INTERNAL_SERVER_ERROR,
+            data: null,
+            message: 'INTERNAL SERVER ERROR'
+        });
+    }
+}
