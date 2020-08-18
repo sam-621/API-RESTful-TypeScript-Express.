@@ -3,8 +3,6 @@ import {
     GetUserInfo, 
     UpdateUserInfo, 
     UpdatePasswordController, 
-    GetHomeUserInfo,
-    GetAllUsers
 } from '../controllers/user.controllers';
 import { UpdateInfoValidator, UpdatePasswordValitador } from '../validators/user.validators';
 import authMiddleware from '../middlewares/auth.middlewares';
@@ -14,17 +12,6 @@ router.get(
     '/user/info',
     authMiddleware,
     GetUserInfo
-)
-
-router.get(
-    '/user/home',
-    authMiddleware,
-    GetHomeUserInfo
-)
-
-router.get(
-    '/user/friends',
-    GetAllUsers
 )
 
 router.put(
