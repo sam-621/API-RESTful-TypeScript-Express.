@@ -9,7 +9,9 @@ import userRoutes from './routes/user.routes';
 import postRoutes from './routes/posts.routes';
 import likeRoutes from './routes/likes.routes';
 import commentsRoutes from './routes/comments.routes';
-import otherUsers from './routes/otherUsers.routes'
+import otherUsers from './routes/otherUsers.routes';
+import HomeRoutes from './routes/home.routes';
+import profileRoutes from './routes/profile.routes';
 
 export class Server {
 
@@ -42,6 +44,8 @@ export class Server {
         this.App.use('/explorespace/api', likeRoutes);
         this.App.use('/explorespace/api', commentsRoutes);
         this.App.use('/explorespace/api', otherUsers);
+        this.App.use('/explorespace/api', HomeRoutes);
+        this.App.use('/explorespace/api', profileRoutes);
     }
 
     private MiddlewaresOutput() {
