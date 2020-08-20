@@ -1,7 +1,7 @@
 {
-  "name": "socialmedia-api",
+  "name": "social-media-api",
   "version": "2.0.0",
-  "description": "An API for a social media. Created with Typescript in order to practice and learn",
+  "description": "An API Created in order to practice my backend skills.",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.ts",

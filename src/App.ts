@@ -4,14 +4,14 @@ import cors from 'cors';
 import NotFound from './middlewares/NotFound.middlewares';
 import APIkey from './middlewares/apiKey.middlewares';
 
+/*--------------------ROUTES------------------------------*/ 
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import postRoutes from './routes/posts.routes';
-import likeRoutes from './routes/likes.routes';
-import commentsRoutes from './routes/comments.routes';
-import otherUsers from './routes/otherUsers.routes';
 import HomeRoutes from './routes/home.routes';
 import profileRoutes from './routes/profile.routes';
+import postActions from './routes/postActions.routes';
+/*--------------------------------------------------------*/
 
 export class Server {
 
@@ -41,11 +41,9 @@ export class Server {
         this.App.use('/explorespace/api', authRoutes);
         this.App.use('/explorespace/api', userRoutes);
         this.App.use('/explorespace/api', postRoutes);
-        this.App.use('/explorespace/api', likeRoutes);
-        this.App.use('/explorespace/api', commentsRoutes);
-        this.App.use('/explorespace/api', otherUsers);
         this.App.use('/explorespace/api', HomeRoutes);
         this.App.use('/explorespace/api', profileRoutes);
+        this.App.use('/explorespace/api', postActions);
     }
 
     private MiddlewaresOutput() {
