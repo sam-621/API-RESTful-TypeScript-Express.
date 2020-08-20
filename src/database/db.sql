@@ -1,4 +1,4 @@
-CREATE DATABASE ExploreSpace;
+CREATE DATABASE SocialMedia;
 
 USE ExploreSpace;
 

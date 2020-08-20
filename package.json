@@ -1,7 +1,7 @@
 {
-  "name": "explorespace-api",
+  "name": "social-media-api",
   "version": "1.2.0",
-  "description": "An API for ExploreSpace social media. Created with Typescript and in order to practice and learn",
+  "description": "An API Created in order to practice my backend skills.",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.ts",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rogeliosamuel621/Twitter-Clone-API"
+    "url": "https://github.com/rogeliosamuel621/Social-Media-API"
   },
   "keywords": [],
   "author": "@rogeliosamuel21",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rogeliosamuel621/Twitter-Clone-API/issues"
+    "url": "https://github.com/rogeliosamuel621/Social-Media-API/issues"
   },
-  "homepage": "https://github.com/rogeliosamuel621/Twitter-Clone-API#readme",
+  "homepage": "https://github.com/rogeliosamuel621/Social-Media-API#readme",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.7",
