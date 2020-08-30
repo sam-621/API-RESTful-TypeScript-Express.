@@ -1,14 +1,14 @@
 export interface IUser {
-    ID?: string
-    firstName: string,
-    lastName: string,
-    email: string,
-    username: string,
-    password: string,
-    followers?: number
+  ID?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  password: string;
+  followers?: number;
 }
 
 export interface ILoginUser {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
