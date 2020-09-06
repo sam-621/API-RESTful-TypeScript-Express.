@@ -1,5 +1,4 @@
 import { Response } from "express";
-import { validationResult } from "express-validator";
 import { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } from "http-status-codes";
 import { RowDataPacket } from "mysql2";
 

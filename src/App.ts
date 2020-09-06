@@ -1,6 +1,7 @@
 import Express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import fileUpload from "express-fileupload";
 import NotFound from "./middlewares/NotFound.middlewares";
 import APIkey from "./middlewares/apiKey.middlewares";
 
@@ -33,6 +34,7 @@ export class Server {
     this.App.use(morgan("dev"));
     this.App.use(Express.json());
     this.App.use(Express.urlencoded({ extended: false }));
+    this.App.use(fileUpload());
     this.App.use(APIkey);
   }
 
