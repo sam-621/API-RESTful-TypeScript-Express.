@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon ./src/index.ts",
     "build": "tsc",
-    "prod": "node ./dist/index.js"
+    "prod": "node ./dist/index.js",
+    "test": "nodemon ./tests/routes.test.ts"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "@types/jsonwebtoken": "^8.5.0",
     "@types/morgan": "^1.9.1",
     "@types/mysql2": "github:types/mysql2",
+    "axios": "^0.20.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.2",
