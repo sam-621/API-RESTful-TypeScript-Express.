@@ -7,7 +7,8 @@
     "dev": "nodemon ./src/index.ts",
     "build": "tsc",
     "prod": "node ./dist/index.js",
-    "test": "nodemon ./tests/routes.test.ts"
+    "build-test": "tsc ./tests/routes.test.ts",
+    "test": "node ./tests/routes.test.js"
   },
   "repository": {
     "type": "git",
